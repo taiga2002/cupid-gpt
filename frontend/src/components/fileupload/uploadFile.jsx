@@ -12,9 +12,10 @@ function FileUpload() {
         if (file) {
             const formData = new FormData();
             formData.append('file', file);
+            console.log("123")
 
             try {
-                const response = await fetch('http://localhost:5000/upload', {
+                const response = await fetch('http://127.0.0.1:6006/process_mp3', {
                     method: 'POST',
                     body: formData,
                 });
