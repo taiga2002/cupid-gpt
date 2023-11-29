@@ -16,6 +16,7 @@ if API_KEY:
     client = OpenAI(api_key=API_KEY)
 else:
     raise ValueError("Please set your OpenAI API key.")
+
 gpt_prompts = [{"role": "system", "content": "I am a man and you are a woman. I am trying to practice speaking to women. You can be flirty when necessary."}]
 
 @app.route('/process_mp3', methods=['POST'])
@@ -32,8 +33,9 @@ def process_mp3():
     if file and allowed_file(file.filename):
         print(file.filename)
         print("Processing file")
-        # Process the MP3 file
-        audio = AudioSegment.from_mp3(BytesIO(file.read()))
+        # Process the audio file
+        audio_format = file.filename.rsplit('.', 1)[1].lower()
+        audio = AudioSegment.from_file(BytesIO(file.read()), format=audio_format)
 
         # Write the converted audio to a temporary WAV file
         with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as temp_wav:
@@ -45,7 +47,7 @@ def process_mp3():
                 print("here 456")
                 try:
                     user_message = client.audio.transcriptions.create(
-                        model="whisper-1", 
+                        model="whisper-1",
                         file=wav_file
                     )
                     transcription = user_message.text
@@ -68,7 +70,7 @@ def process_mp3():
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ['mp3']
+           filename.rsplit('.', 1)[1].lower() in ['mp3', 'webm']
 
 if __name__ == '__main__':
     app.run(debug=True, port=6006)
