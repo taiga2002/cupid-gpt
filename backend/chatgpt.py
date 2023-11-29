@@ -29,7 +29,7 @@ def text_to_speech_and_play(text):
         )
         speech_file_path = os.path.join(os.getcwd(), SPEECH_FILE)
         response_audio.stream_to_file("speech.mp3")
-        
+        return speech_file_path
         pygame.mixer.music.load(speech_file_path)
         pygame.mixer.music.play()
         while pygame.mixer.music.get_busy():

@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 import openai
 import os
@@ -68,9 +68,32 @@ def process_mp3():
         except openai.BadRequestError as e:
             print(f"An error occurred: {e}")
 
+@app.route('/generate-speech', methods=['POST'])
+def generate_speech():
+    text = request.json.get('text')
+    if not text:
+        return "No text provided", 400
+
+    # Assuming you have a function to generate the speech file
+    speech_file_path = text_to_speech_and_play(text)
+
+    # Return the generated speech file
+    return send_file(speech_file_path, mimetype="audio/mp3")
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ['mp3', 'webm']
+
+def text_to_speech_and_play(text):
+    response_audio = client.audio.speech.create(
+        model="tts-1",
+        voice="nova",
+        input=text
+    )
+    SPEECH_FILE = "speech.mp3"
+    speech_file_path = os.path.join(os.getcwd(), SPEECH_FILE)
+    response_audio.stream_to_file("speech.mp3")
+    return speech_file_path
 
 if __name__ == '__main__':
     app.run(debug=True, port=6006)
