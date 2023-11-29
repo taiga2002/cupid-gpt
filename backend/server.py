@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 import openai
 import os
 from pydub import AudioSegment
@@ -8,7 +8,7 @@ import tempfile
 
 app = Flask(__name__)
 
-API_KEY = "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"
+API_KEY = "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"
 
 if API_KEY:
     client = OpenAI(api_key=API_KEY)
@@ -56,9 +56,32 @@ def process_mp3():
         except openai.BadRequestError as e:
             print(f"An error occurred: {e}")
 
+@app.route('/generate-speech', methods=['POST'])
+def generate_speech():
+    text = request.json.get('text')
+    if not text:
+        return "No text provided", 400
+
+    # Assuming you have a function to generate the speech file
+    speech_file_path = text_to_speech_and_play(text)
+
+    # Return the generated speech file
+    return send_file(speech_file_path, mimetype="audio/mp3")
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ['mp3']
+
+def text_to_speech_and_play(text):
+    response_audio = client.audio.speech.create(
+        model="tts-1",
+        voice="nova",
+        input=text
+    )
+    SPEECH_FILE = "speech.mp3"
+    speech_file_path = os.path.join(os.getcwd(), SPEECH_FILE)
+    response_audio.stream_to_file("speech.mp3")
+    return speech_file_path
 
 if __name__ == '__main__':
     app.run(debug=True)
