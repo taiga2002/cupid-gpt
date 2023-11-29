@@ -1,0 +1,42 @@
+{
+    "items": [
+        {
+            "url": "https://icanhazdadjoke.com/api#endpoints",
+            "json": [
+                {
+                    "curl": "'curl -H \"Accept: application/json\" https://icanhazdadjoke.com/'",
+                    "description": " 'Fetch a random dad joke in json format'"
+                },
+                {
+                    "curl": "'curl -H \"Accept: text/plain\" https://icanhazdadjoke.com/'",
+                    "description": " ' Fetch a random dad joke in text format'"
+                },
+                {
+                    "curl": "'curl https://icanhazdadjoke.com/slack'",
+                    "description": " 'Fetch a random dad joke formatted for Slack'"
+                },
+                {
+                    "curl": "'curl -H \"Accept: application/json\" https://icanhazdadjoke.com/j/{joke_id}'",
+                    "description": " 'Fetch a specific dad joke in json format using joke id'"
+                },
+                {
+                    "curl": "'curl -H \"Accept: text/plain\" https://icanhazdadjoke.com/j/{joke_id}'",
+                    "description": " 'Fetch a specific dad joke in text format using joke id'"
+                },
+                {
+                    "curl": "'curl -H \"Accept: application/json\" https://icanhazdadjoke.com/search'",
+                    "description": " 'Search for dad jokes in json format'"
+                },
+                {
+                    "curl": "'curl -H \"Accept: text/plain\" https://icanhazdadjoke.com/search'",
+                    "description": " 'Search for dad jokes in text format'"
+                },
+                {
+                    "curl": "'curl -H \"Accept: application/json\" https://icanhazdadjoke.com/search?term={search_term}'",
+                    "description": " 'Search for dad jokes using a search term'"
+                }
+            ],
+            "summary": "As an AI, I'm here to help you interact with a fun and entertaining section of the internet - dad jokes! Here are some of the things you can ask me to do:\n\n1. \"Could you tell me a random dad joke?\" - I can serve it to you as simple text or in a more structured format.\n2. \"Could you share a random dad joke suitable for Slack?\" - Evidently, I have the ability to tailor my answer to fit different platforms, like Slack!\n3. \"Can I hear a specific dad joke if I give you its ID?\" - Of course! Just give me the ID and I can provide you with the joke either as text or in a structured format.\n4. \"Could you help me find a selection of dad jokes?\" - I can show you an array of dad jokes, either as simple text or in a json format.\n5. \"How about finding a dad joke with a specific theme or keyword?\" - That's quite doable! Just tell me the term you wish to search for.\n\nJust ask and enjoy the dad joke extravaganza!"
+        }
+    ]
+}
