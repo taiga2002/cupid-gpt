@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { uploadFile2 } from "@/components/fileupload/uploadFile2"
+import styles from './AudioRecorder.module.css';
+
 
 // @ts-ignore
 const AudioRecorder = ( {setInputBoxValue} ) => {
@@ -61,79 +63,16 @@ const AudioRecorder = ( {setInputBoxValue} ) => {
         }
     };
 
-    const audioRecorderStyle = {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    };
-
-    const recordButtonBaseStyle = {
-        // position: 'relative',
-        padding: '15px 30px',
-        border: '2px solid #4CAF50',
-        borderRadius: '25px',
-        backgroundColor: 'transparent',
-        color: '#4CAF50',
-        fontSize: '16px',
-        cursor: 'pointer',
-        overflow: 'hidden',
-        transition: 'all 0.3s ease',
-    };
-
-    const recordButtonHoverStyle = {
-        borderColor: '#45a049',
-        color: '#45a049',
-    };
-
-    const recordIconBaseStyle = {
-        // position: 'absolute',
-        // top: '50%',
-        // left: '50%',
-        width: '100%',
-        height: '100%',
-        backgroundColor: '#4CAF50',
-        borderRadius: '50%',
-        transform: 'translate(-50%, -50%) scale(0)',
-        transition: 'transform 0.3s ease',
-    };
-
-    const recordIconHoverStyle = {
-        transform: 'translate(-50%, -50%) scale(1.2)',
-    };
-
-    const recordingStyle = {
-        color: '#f44336',
-        borderColor: '#f44336',
-    };
-
-    const recordingIconStyle = {
-        backgroundColor: '#f44336',
-    };
-
-    const recordingHoverStyle = {
-        color: '#e31b0c',
-        borderColor: '#e31b0c',
-    };
-
-    const recordingIconHoverStyle = {
-        backgroundColor: '#e31b0c',
-    };
-
-    const recordButtonStyle = isRecording ? { ...recordButtonBaseStyle, ...recordingStyle } : recordButtonBaseStyle;
-    const recordIconStyle = isRecording ? { ...recordIconBaseStyle, ...recordingIconStyle } : recordIconBaseStyle;
-
     return (
-        <div style={audioRecorderStyle}>
+        <div className={styles.audioRecorder}>
             <button
-                // @ts-ignore
-                style={isRecording ? { ...recordButtonStyle, ...recordingHoverStyle } : recordButtonStyle}
+                className={isRecording ? `${styles.recordButton} ${styles.isRecording}` : styles.recordButton}
                 onClick={isRecording ? handleStopRecording : handleStartRecording}
             >
-                <span>
+                <span className={styles.buttonContent}>
                     {isRecording ? 'Stop Recording' : 'Start Recording'}
                 </span>
-                {/*@ts-ignore*/}
-                <span style={isRecording ? { ...recordIconStyle, ...recordingIconHoverStyle } : recordIconStyle}></span>
+                <span className={styles.recordIcon}></span>
             </button>
         </div>
     );

@@ -1,0 +1,60 @@
+.audioRecorder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.recordButton {
+    padding: 15px 30px;
+    border: 2px solid #4CAF50;
+    border-radius: 25px;
+    background-color: transparent;
+    color: #4CAF50;
+    font-size: 16px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    transform: scale(1);
+}
+
+.recordButton .buttonContent {
+    transition: transform 0.3s ease;
+}
+
+.recordButton .recordIcon {
+    transition: transform 0.3s ease;
+    transform: scale(0);
+}
+
+.recordButton:hover {
+    border-color: #45a049;
+    color: #45a049;
+    background-color: #eef2ee;
+    transform: scale(1.05);
+}
+
+.recordButton:hover .buttonContent {
+    transform: translateY(-2px);
+}
+
+.recordButton:hover .recordIcon {
+    transform: scale(1.2);
+}
+
+.isRecording {
+    color: #f44336;
+    border-color: #f44336;
+}
+
+.isRecording:hover {
+    color: #e31b0c;
+    border-color: #e31b0c;
+}
+
+.isRecording .recordIcon {
+    background-color: #f44336;
+}
+
+.isRecording:hover .recordIcon {
+    background-color: #e31b0c;
+}
