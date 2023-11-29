@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { uploadFile2 } from "@/components/fileupload/uploadFile2"
 
 const AudioRecorder = () => {
     const [isRecording, setIsRecording] = useState(false);
@@ -20,11 +21,9 @@ const AudioRecorder = () => {
 
                 mediaRecorderRef.current.onstop = () => {
                     const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
-                    const audioUrl = URL.createObjectURL(audioBlob);
-                    const link = document.createElement('a');
-                    link.href = audioUrl;
-                    link.download = 'recording.webm';
-                    link.click();
+
+                    // Call the uploadFile function with the audioBlob
+                    uploadFile2(audioBlob);
                 };
 
                 mediaRecorderRef.current.start();

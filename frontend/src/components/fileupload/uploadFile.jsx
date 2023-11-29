@@ -15,7 +15,7 @@ function FileUpload() {
             console.log("123")
 
             try {
-                const response = await fetch('http://127.0.0.1:6006/process_mp3', {
+                const response = await fetch('http://localhost:3000/process_mp3', {
                     method: 'POST',
                     body: formData,
                 });
