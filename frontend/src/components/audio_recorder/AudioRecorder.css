@@ -1,62 +1,62 @@
-.audio-recorder {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Adjust as needed */
-}
+/*.audio-recorder {*/
+/*    display: flex;*/
+/*    justify-content: center;*/
+/*    align-items: center;*/
+/*    height: 100vh; !* Adjust as needed *!*/
+/*}*/
 
-.record-button {
-    position: relative;
-    padding: 15px 30px;
-    border: 2px solid #4CAF50;
-    border-radius: 25px;
-    background-color: transparent;
-    color: #4CAF50;
-    font-size: 16px;
-    cursor: pointer;
-    overflow: hidden;
-    transition: all 0.3s ease;
-}
+/*.record-button {*/
+/*    !*position: relative;*!*/
+/*    padding: 15px 30px;*/
+/*    border: 2px solid #4CAF50;*/
+/*    border-radius: 25px;*/
+/*    background-color: transparent;*/
+/*    color: #4CAF50;*/
+/*    font-size: 16px;*/
+/*    cursor: pointer;*/
+/*    overflow: hidden;*/
+/*    transition: all 0.3s ease;*/
+/*}*/
 
-.record-button .button-content {
-    z-index: 2;
-}
+/*.record-button .button-content {*/
+/*    z-index: 2;*/
+/*}*/
 
-.record-button .record-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    background-color: #4CAF50;
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform 0.3s ease;
-}
+/*.record-button .record-icon {*/
+/*    !*position: absolute;*!*/
+/*    top: 50%;*/
+/*    left: 50%;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    background-color: #4CAF50;*/
+/*    border-radius: 50%;*/
+/*    transform: translate(-50%, -50%) scale(0);*/
+/*    transition: transform 0.3s ease;*/
+/*}*/
 
-.record-button:hover {
-    border-color: #45a049;
-    color: #45a049;
-}
+/*.record-button:hover {*/
+/*    border-color: #45a049;*/
+/*    color: #45a049;*/
+/*}*/
 
-.record-button:hover .record-icon {
-    transform: translate(-50%, -50%) scale(1.2);
-}
+/*.record-button:hover .record-icon {*/
+/*    transform: translate(-50%, -50%) scale(1.2);*/
+/*}*/
 
-.record-button.is-recording {
-    color: #f44336;
-    border-color: #f44336;
-}
+/*.record-button.is-recording {*/
+/*    color: #f44336;*/
+/*    border-color: #f44336;*/
+/*}*/
 
-.record-button.is-recording .record-icon {
-    background-color: #f44336;
-}
+/*.record-button.is-recording .record-icon {*/
+/*    background-color: #f44336;*/
+/*}*/
 
-.record-button.is-recording:hover {
-    color: #e31b0c;
-    border-color: #e31b0c;
-}
+/*.record-button.is-recording:hover {*/
+/*    color: #e31b0c;*/
+/*    border-color: #e31b0c;*/
+/*}*/
 
-.record-button.is-recording:hover .record-icon {
-    background-color: #e31b0c;
-}
+/*.record-button.is-recording:hover .record-icon {*/
+/*    background-color: #e31b0c;*/
+/*}*/

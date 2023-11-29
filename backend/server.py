@@ -8,9 +8,9 @@ from openai import OpenAI
 import tempfile
 
 app = Flask(__name__)
-CORS(app, resources={r"/process_mp3": {"origins": "http://localhost:6006"}})
+CORS(app)
 
-API_KEY = os.getenv('OPENAI_API_KEY')
+API_KEY = "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"
 
 if API_KEY:
     client = OpenAI(api_key=API_KEY)
@@ -96,4 +96,4 @@ def text_to_speech_and_play(text):
     return speech_file_path
 
 if __name__ == '__main__':
-    app.run(debug=True, port=6006)
+    app.run(debug=True, port=3000)

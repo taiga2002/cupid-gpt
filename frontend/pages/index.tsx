@@ -21,6 +21,7 @@ export default function Chat() {
     // Input States
     const [inputOnSubmit, setInputOnSubmit] = useState<string>('');
     const [inputCode, setInputCode] = useState<string>('');
+    const [inputBoxValue, setInputBoxValue] = useState<string>('');
     // Response message
     const [outputCode, setOutputCode] = useState<string>('');
     // Loading state
@@ -38,17 +39,12 @@ export default function Chat() {
     };
 
     useEffect(() => {
-        scrollToBottom();
-    }, [chatHistory]);
-
+        setInputCode(inputBoxValue)
+    }, [inputBoxValue]);
 
     useEffect(() => {
-        if (apiDocURL === '') {
-            return;
-        }
-        const msg = `Import documentation from ${apiDocURL}`;
-        setInputCode(msg);
-    }, [apiDocURL]);
+        scrollToBottom();
+    }, [chatHistory]);
 
 
     async function fetchAPIImport() {
@@ -276,6 +272,7 @@ export default function Chat() {
                         color={inputColor}
                         _placeholder={placeholderColor}
                         placeholder="Type your message here..."
+                        value={inputBoxValue}
                         onChange={handleChange}
                     />
                     <Button
@@ -303,8 +300,9 @@ export default function Chat() {
                     </Button>
                     <div style={{paddingLeft:'10px'}}></div>
                     <APIModal 
-                    setApiKey={setURL} 
-                    func_2_call={fetchAPIImport}/>
+                    setApiKey={setURL}
+                    setInputBoxValue={setInputBoxValue}/>
+
                 </Flex>
 
                 <Flex

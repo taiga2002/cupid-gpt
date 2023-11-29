@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { uploadFile2 } from "@/components/fileupload/uploadFile2"
 
-const AudioRecorder = () => {
+// @ts-ignore
+const AudioRecorder = ( {setInputBoxValue} ) => {
     const [isRecording, setIsRecording] = useState(false);
     const mediaRecorderRef = useRef(null);
     const audioChunksRef = useRef([]);
@@ -10,27 +11,36 @@ const AudioRecorder = () => {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                // @ts-ignore
                 mediaRecorderRef.current = new MediaRecorder(stream);
                 audioChunksRef.current = [];
 
+                // @ts-ignore
                 mediaRecorderRef.current.ondataavailable = (event) => {
                     if (event.data.size > 0) {
+                        // @ts-ignore
                         audioChunksRef.current.push(event.data);
                     }
                 };
 
+                // @ts-ignore
                 mediaRecorderRef.current.onstop = () => {
+                    console.log("onstop")
+                    console.log(setInputBoxValue)
                     const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
 
                     // Call the uploadFile function with the audioBlob
                     uploadFile2(audioBlob).then((response) => {
                         console.log(response);
+                        setInputBoxValue(response.response);
+                        console.log(response.response);
                     }
                     ).catch((error) => {
                         console.log(error);
                     });
                 };
 
+                // @ts-ignore
                 mediaRecorderRef.current.start();
                 setIsRecording(true);
             } catch (error) {
@@ -43,7 +53,9 @@ const AudioRecorder = () => {
     };
 
     const handleStopRecording = () => {
+        // @ts-ignore
         if (mediaRecorderRef.current && mediaRecorderRef.current.state === 'recording') {
+            // @ts-ignore
             mediaRecorderRef.current.stop();
             setIsRecording(false);
         }
@@ -53,11 +65,10 @@ const AudioRecorder = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh', // Adjust as needed
     };
 
     const recordButtonBaseStyle = {
-        position: 'relative',
+        // position: 'relative',
         padding: '15px 30px',
         border: '2px solid #4CAF50',
         borderRadius: '25px',
@@ -75,9 +86,9 @@ const AudioRecorder = () => {
     };
 
     const recordIconBaseStyle = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
+        // position: 'absolute',
+        // top: '50%',
+        // left: '50%',
         width: '100%',
         height: '100%',
         backgroundColor: '#4CAF50',
@@ -114,12 +125,14 @@ const AudioRecorder = () => {
     return (
         <div style={audioRecorderStyle}>
             <button
+                // @ts-ignore
                 style={isRecording ? { ...recordButtonStyle, ...recordingHoverStyle } : recordButtonStyle}
                 onClick={isRecording ? handleStopRecording : handleStartRecording}
             >
                 <span>
                     {isRecording ? 'Stop Recording' : 'Start Recording'}
                 </span>
+                {/*@ts-ignore*/}
                 <span style={isRecording ? { ...recordIconStyle, ...recordingIconHoverStyle } : recordIconStyle}></span>
             </button>
         </div>
