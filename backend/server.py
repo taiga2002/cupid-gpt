@@ -37,6 +37,11 @@ def process_mp3():
         audio_format = file.filename.rsplit('.', 1)[1].lower()
         audio = AudioSegment.from_file(BytesIO(file.read()), format=audio_format)
 
+#       TODO: Remove this mock
+        return jsonify({
+            'response': 'I am a mocked message',
+        })
+
         # Write the converted audio to a temporary WAV file
         with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as temp_wav:
             print("here 123")
