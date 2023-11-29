@@ -32,7 +32,7 @@ function FileUpload() {
 
     return (
         <form onSubmit={handleSubmit}>
-            <input type="file" accept=".mp3" onChange={handleFileChange} />
+            <input type="file" accept=".mp3,.webm,audio/*" onChange={handleFileChange} />
             <button type="submit">Upload</button>
         </form>
     );
