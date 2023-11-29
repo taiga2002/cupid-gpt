@@ -10,7 +10,7 @@ import tempfile
 app = Flask(__name__)
 CORS(app, resources={r"/process_mp3": {"origins": "http://localhost:6006"}})
 
-API_KEY = "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"
+API_KEY = os.getenv('OPENAI_API_KEY')
 
 if API_KEY:
     client = OpenAI(api_key=API_KEY)
