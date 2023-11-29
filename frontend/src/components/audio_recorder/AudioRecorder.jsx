@@ -23,7 +23,12 @@ const AudioRecorder = () => {
                     const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
 
                     // Call the uploadFile function with the audioBlob
-                    uploadFile2(audioBlob);
+                    uploadFile2(audioBlob).then((response) => {
+                        console.log(response);
+                    }
+                    ).catch((error) => {
+                        console.log(error);
+                    });
                 };
 
                 mediaRecorderRef.current.start();
