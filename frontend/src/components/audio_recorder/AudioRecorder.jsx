@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import './AudioRecorder.css'; // Import the CSS file for styles
 
 const AudioRecorder = () => {
     const [isRecording, setIsRecording] = useState(false);
@@ -46,9 +47,15 @@ const AudioRecorder = () => {
     };
 
     return (
-        <div>
-            <button onClick={isRecording ? handleStopRecording : handleStartRecording}>
-                {isRecording ? 'Stop Recording' : 'Start Recording'}
+        <div className="audio-recorder">
+            <button
+                className={`record-button ${isRecording ? 'is-recording' : ''}`}
+                onClick={isRecording ? handleStopRecording : handleStartRecording}
+            >
+                <span className="button-content">
+                    {isRecording ? 'Stop Recording' : 'Start Recording'}
+                </span>
+                <span className={`record-icon ${isRecording ? 'active' : ''}`}></span>
             </button>
         </div>
     );
