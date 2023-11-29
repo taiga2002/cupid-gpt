@@ -27,6 +27,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { MdLock } from 'react-icons/md';
+import AudioRecorder   from "@/components/audio_recorder/AudioRecorder";
 
 function APIModal(props: { setApiKey: any; func_2_call?: any }) {
   const { setApiKey } = props;
@@ -65,6 +66,9 @@ function APIModal(props: { setApiKey: any; func_2_call?: any }) {
       >
         Import APIs
       </Button>
+
+      {/*123*/}
+      <AudioRecorder />
 
       <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
