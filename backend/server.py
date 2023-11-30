@@ -10,7 +10,7 @@ import tempfile
 app = Flask(__name__)
 CORS(app)
 
-API_KEY = "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"
+API_KEY = "sk-******"
 
 if API_KEY:
     client = OpenAI(api_key=API_KEY)

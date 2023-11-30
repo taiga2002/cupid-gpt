@@ -7,7 +7,7 @@ import sounddevice as sd
 import soundfile as sf
 
 # Constants
-API_KEY = "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"
+API_KEY = "sk-****"
 SPEECH_FILE = "speech.mp3"
 TEXT_FILE = "recorded_audio.wav"
 

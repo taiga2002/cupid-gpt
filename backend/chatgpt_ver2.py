@@ -4,7 +4,7 @@ import speech_recognition as sr
 import time
 from openai import OpenAI
 
-API_KEY = "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"
+API_KEY = "sk-******"
 engine = pyttsx3.init()
 if API_KEY:
     client = OpenAI(api_key=API_KEY)
