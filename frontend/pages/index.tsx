@@ -8,6 +8,7 @@ import {MdAutoAwesome, MdPerson} from 'react-icons/md';
 import Bg from '../public/img/chat/bg-image.png';
 import axios from 'axios';
 import APIModal from "@/components/apiModal";
+import { uploadAudio, processText, audioToText } from "@/utils/functions";
 
 type ChatMessage = {
     type: 'sent' | 'received';
@@ -47,87 +48,27 @@ export default function Chat() {
     }, [chatHistory]);
 
 
-    async function fetchAPIImport() {
-        try {
-            setLoading(true);
-            const response = await axios.get('http://127.0.0.1:105/import', {
-                params: {"url": 'https://icanhazdadjoke.com/api#endpoints'},
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            console.log("test0")
-
-            // Accessing the response body
-            let data = response.data;
-
-            // Now you can use responseBody as needed
-            console.log("123test")
-            console.log(data);
-
-            // @ts-ignore
-            let summary = data['summary']
-            // summary = "123981239812938129389123"
-
-            console.log(summary)
-
-            const newChat: ChatMessage =
-                {
-                    type: 'sent',
-                    message: `Import documentation from ${apiDocURL}`
-                };
-            setChatHistory((prevChats) => [...prevChats, newChat].filter(chat => chat.message.trim() !== ""));
-
-            setOutputCode(summary);
-            const newReply: ChatMessage = {type: 'received', message: summary};
-            console.log(newReply)
-            setChatHistory((prevChats) => [...prevChats, newReply].filter(chat => chat.message.trim() !== ""));
-            setLoading(false);
-        } catch (error) {
-            console.error('Error fetching data: ', error);
-            alert('Something went wrong when fetching from the API. Make sure to use a valid API key.');
-        }
-    }
-
-    async function fetchAPIQuery(conversation: string[]) {
+    async function userMsgToServerMsg(conversation: string[]) {
         try {
             if (conversation.length === 0) {
                 return;
             }
             console.log(`Final sent convesation ${conversation}`);
-            const response = await axios.post('http://127.0.0.1:105/query', {
-                conversation: conversation
-            }, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
-
             setLoading(true);
-
             console.log("Query Sent");
-
-            // Accessing the response body
-            let data = response.data;
-
-            console.log("Response Received");
-            console.log(data);
-
-            let summary = data['summary'];
-
-            console.log(`Here is the summary ${summary}`);
-
-            // set new chat to history
-            const newReply: ChatMessage = {type: 'received', message: summary};
-            const newHist = [...chatHistory, newReply].filter(chat => chat.message.trim() !== "");
-            console.log(`Test chat history: ${newHist}`);
-            setChatHistory(newHist);
-            setLoading(false);
-
-            // Here, add your logic to handle the response as needed
-            // For example, you can update the chat history, set output code, etc.
-
+            processText(conversation[0]).then((response) => {
+                console.log("Response Received");
+                let data = response.reply;
+                console.log(data);
+                setLoading(false);
+                // set new chat to history
+                const newReply: ChatMessage = {type: 'received', message: data};
+                const newHist = [...chatHistory, newReply].filter(chat => chat.message.trim() !== "");
+                console.log(`Test chat history: ${newHist}`);
+                setChatHistory(newHist);
+            }).catch((error) => {
+                console.log(error);
+            });
         } catch (error) {
             console.error('Error fetching data: ', error);
             alert('Something went wrong when fetching from the API. Please check the console for more details.');
@@ -162,7 +103,8 @@ export default function Chat() {
 
         // fetchData();
         await setChatHistory(newHist);
-        await fetchAPIQuery(chatHistoryToConversation(newHist));
+        // await userMsgToServerMsg(chatHistoryToConversation(newHist));
+        await userMsgToServerMsg([inputCode]);
         setLoading(false);
     };
 

@@ -16,6 +16,7 @@ export const uploadAudio = (audioFile) => {
 
 // Function to process text and get the server message
 export const processText = (text) => {
+    console.log(JSON.stringify({ text: text }))
     return fetch('http://127.0.0.1:3000/user_msg_to_server_msg', {
         method: 'POST',
         headers: {
@@ -23,7 +24,11 @@ export const processText = (text) => {
         },
         body: JSON.stringify({ text: text }),
     })
-        .then(response => response.ok ? response.json() : Promise.reject('Text processing failed'))
+        .then(response => {
+            console.log('Text processed successfully')
+            console.log(response)
+            return response.ok ? response.json() : Promise.reject('Text processing failed')
+        })
         .catch(error => {
             console.error('Error:', error);
             throw error;

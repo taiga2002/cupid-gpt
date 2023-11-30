@@ -76,14 +76,18 @@ def api_audio_to_text():
 @app.route('/user_msg_to_server_msg', methods=['POST'])
 def api_user_msg_to_server_msg():
     """API endpoint to process user message and return server message."""
+    print("api triggered: user_msg_to_server_msg")
     if not request.json or 'text' not in request.json:
+        print("no text provided")
         return jsonify({'error': 'No text provided'}), 400
 
     text = request.json['text']
     try:
+        print("text 1")
         reply = user_msg_to_server_msg(text)
         return jsonify({'reply': reply})
     except openai.BadRequestError as e:
+        print("error 1")
         return jsonify({'error': str(e)}), 500
 
 
