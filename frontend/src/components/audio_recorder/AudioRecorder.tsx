@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { uploadFile2 } from "@/components/fileupload/uploadFile2"
+// @ts-ignore
+import { uploadAudio, processText, audioToText } from "@/utils/functions";
 import styles from './AudioRecorder.module.css';
 
 
@@ -31,15 +32,18 @@ const AudioRecorder = ( {setInputBoxValue} ) => {
                     console.log(setInputBoxValue)
                     const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
 
-                    // Call the uploadFile function with the audioBlob
-                    uploadFile2(audioBlob).then((response) => {
+                    // Call the uploadFile function with the audioBlob'
+                    // @ts-ignore
+                    audioToText(audioBlob).then((response) => {
+                        console.log("Audio to text:")
                         console.log(response);
-                        setInputBoxValue(response.response);
-                        console.log(response.response);
+                        setInputBoxValue(response);
                     }
+                    // @ts-ignore
                     ).catch((error) => {
                         console.log(error);
                     });
+                    console.log("after audioToText")
                 };
 
                 // @ts-ignore
@@ -68,6 +72,11 @@ const AudioRecorder = ( {setInputBoxValue} ) => {
             <button
                 className={isRecording ? `${styles.recordButton} ${styles.isRecording}` : styles.recordButton}
                 onClick={isRecording ? handleStopRecording : handleStartRecording}
+                // onClick={
+                //     () => {
+                //         setInputBoxValue("Recording...");
+                //     }
+                // }
             >
                 <span className={styles.buttonContent}>
                     {isRecording ? 'Stop Recording' : 'Start Recording'}

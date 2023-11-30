@@ -10,7 +10,7 @@ import tempfile
 app = Flask(__name__)
 CORS(app)
 
-API_KEY = "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"
+API_KEY = "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"
 
 if API_KEY:
     client = OpenAI(api_key=API_KEY)
@@ -21,57 +21,109 @@ gpt_prompts = [{"role": "system", "content": "I am a man and you are a woman. I 
 
 @app.route('/process_mp3', methods=['POST'])
 def process_mp3():
+    """Mp3 file to text input, followed by processing the text to generate a server message."""
     if 'file' not in request.files:
-        print("No file part")
         return jsonify({'error': 'No file part'}), 400
 
     file = request.files['file']
     if file.filename == '':
-        print("No selected file")
         return jsonify({'error': 'No selected file'}), 400
 
     if file and allowed_file(file.filename):
-        print(file.filename)
-        print("Processing file")
-        # Process the audio file
-        audio_format = file.filename.rsplit('.', 1)[1].lower()
-        audio = AudioSegment.from_file(BytesIO(file.read()), format=audio_format)
-
-#       TODO: Remove this mock
-        return jsonify({
-            'response': 'I am a mocked message',
-        })
-
-        # Write the converted audio to a temporary WAV file
-        with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as temp_wav:
-            print("here 123")
-            audio.export(temp_wav.name, format="wav")
-
-            # Read the WAV file and send for transcription
-            with open(temp_wav.name, 'rb') as wav_file:
-                print("here 456")
-                try:
-                    user_message = client.audio.transcriptions.create(
-                        model="whisper-1",
-                        file=wav_file
-                    )
-                    transcription = user_message.text
-                except openai.OpenAIError as e:
-                    print(f"An error occurred 9999999: {e}")
-                    return jsonify({'error': str(e)}), 500
-
-            # Remove the temporary file
-            os.remove(temp_wav.name)
-        gpt_prompts.append({"role": "user", "content": user_message.text})
-        print("\n 1923891238912839" + user_message.text + "\n")
         try:
-            response = client.chat.completions.create(model="gpt-3.5-turbo", messages=gpt_prompts)
-            reply = response.choices[0].message.content
-            gpt_prompts.append({"role": "assistant", "content": reply})
-            print("\n" + reply + "\n")
+            # Convert audio to text
+            transcription = audio_to_text(file)
+
+            # Process the transcribed text to generate a server message
+            reply = user_msg_to_server_msg(transcription)
+
+            # Return the server's response
             return jsonify({'response': reply})
+        except openai.OpenAIError as e:
+            return jsonify({'error': str(e)}), 500
         except openai.BadRequestError as e:
-            print(f"An error occurred: {e}")
+            return jsonify({'error': str(e)}), 500
+
+    else:
+        return jsonify({'error': 'Invalid file type'}), 400
+
+
+@app.route('/audio_to_text', methods=['POST'])
+def api_audio_to_text():
+    """API endpoint to convert audio to text."""
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+
+    print("teststtttt audio")
+
+    if file and allowed_file(file.filename):
+        try:
+            transcription = audio_to_text(file)
+            return jsonify({'transcription': transcription})
+        except openai.OpenAIError as e:
+            return jsonify({'error': str(e)}), 500
+
+    else:
+        print(file.filename)
+        print("invalid file type")
+        return jsonify({'error': 'Invalid file type'}), 400
+
+
+@app.route('/user_msg_to_server_msg', methods=['POST'])
+def api_user_msg_to_server_msg():
+    """API endpoint to process user message and return server message."""
+    if not request.json or 'text' not in request.json:
+        return jsonify({'error': 'No text provided'}), 400
+
+    text = request.json['text']
+    try:
+        reply = user_msg_to_server_msg(text)
+        return jsonify({'reply': reply})
+    except openai.BadRequestError as e:
+        return jsonify({'error': str(e)}), 500
+
+
+def audio_to_text(file):
+    """Convert audio file to text."""
+    audio_format = file.filename.rsplit('.', 1)[1].lower()
+    audio = AudioSegment.from_file(BytesIO(file.read()), format=audio_format)
+
+    with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as temp_wav:
+        audio.export(temp_wav.name, format="wav")
+
+        with open(temp_wav.name, 'rb') as wav_file:
+            try:
+                user_message = client.audio.transcriptions.create(
+                    model="whisper-1",
+                    file=wav_file
+                )
+                transcription = user_message.text
+            except openai.OpenAIError as e:
+                raise e  # Reraise the exception to handle it in the calling function
+
+    os.remove(temp_wav.name)
+    print("transcription")
+    print(transcription)
+    return transcription
+
+
+def user_msg_to_server_msg(text):
+    """Process user message to generate server message."""
+    gpt_prompts.append({"role": "user", "content": text})
+
+    try:
+        response = client.chat.completions.create(model="gpt-3.5-turbo", messages=gpt_prompts)
+        reply = response.choices[0].message.content
+        gpt_prompts.append({"role": "assistant", "content": reply})
+    except openai.BadRequestError as e:
+        raise e  # Reraise the exception to handle it in the calling function
+
+    return reply
+
 
 @app.route('/generate-speech', methods=['POST'])
 def generate_speech():
