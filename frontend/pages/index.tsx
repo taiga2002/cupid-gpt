@@ -44,7 +44,17 @@ export default function Chat() {
     }, [inputBoxValue]);
 
     useEffect(() => {
+        if (chatHistory.length === 0) {
+            return;
+        }
         scrollToBottom();
+        if (chatHistory[chatHistory.length - 1].type === 'sent') {
+            userMsgToServerMsg(chatHistoryToConversation(chatHistory)).catch(
+                (error) => {
+                    console.log(error);
+                },
+            )
+        }
     }, [chatHistory]);
 
 
@@ -58,12 +68,15 @@ export default function Chat() {
             console.log("Query Sent");
             processText(conversation[0]).then((response) => {
                 console.log("Response Received");
+                chatHistory.forEach((chat, index) => console.log(index, chat.message));
                 let data = response.reply;
                 console.log(data);
                 setLoading(false);
                 // set new chat to history
+                console.log("key point")
                 const newReply: ChatMessage = {type: 'received', message: data};
                 const newHist = [...chatHistory, newReply].filter(chat => chat.message.trim() !== "");
+                newHist.forEach((chat, index) => console.log(index, chat.message));
                 console.log(`Test chat history: ${newHist}`);
                 setChatHistory(newHist);
             }).catch((error) => {
@@ -97,14 +110,14 @@ export default function Chat() {
         console.log(`Test new inserted question: ${newChat.message}`);
         let newHist = [...chatHistory, newChat].filter(chat => chat.message.trim() !== "");
         console.log(`Test chat history: ${newHist}`);
+        newHist.forEach((chat, index) => console.log(index, chat.message));
+        setChatHistory(newHist);
+        console.log("test actual variable here")
+        chatHistory.forEach((chat, index) => console.log("1293123123", index, chat.message));
+        console.log("wtf")
 
         setOutputCode(' ');
         setLoading(true);
-
-        // fetchData();
-        await setChatHistory(newHist);
-        // await userMsgToServerMsg(chatHistoryToConversation(newHist));
-        await userMsgToServerMsg([inputCode]);
         setLoading(false);
     };
 
