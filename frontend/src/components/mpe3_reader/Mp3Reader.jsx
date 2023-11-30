@@ -1,23 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-const Mp3Reader = () => {
-    const [audioSrc, setAudioSrc] = useState(null);
+const Mp3Reader = ({ musicSrc }) => {
+    const audioRef = useRef(null);
 
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file && file.type === 'audio/mpeg') {
-            const src = URL.createObjectURL(file);
-            setAudioSrc(src);
-        } else {
-            alert('Please select an MP3 file.');
+    useEffect(() => {
+        if (musicSrc && audioRef.current) {
+            audioRef.current.src = musicSrc; // Set the new source
+            audioRef.current.play().catch(error => console.error('Error playing the audio:', error));
         }
-    };
+    }, [musicSrc]);
 
     return (
-        <div>
-            <input type="file" accept="audio/mpeg" onChange={handleFileChange} />
-            {audioSrc && <audio controls src={audioSrc} />}
-        </div>
+        // Render the audio element off-screen
+        <audio ref={audioRef} style={{ position: 'absolute', left: '-9999px' }} />
     );
 };
 
