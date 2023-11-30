@@ -144,7 +144,7 @@ function SidebarContent(props: SidebarContent) {
                 <Link
                   ms="auto"
                   isExternal
-                  href="https://apiverse.com"
+                  href="https://Cupid-GPT.com"
                 >
                 </Link>
               </Flex>
@@ -165,7 +165,7 @@ function SidebarContent(props: SidebarContent) {
                 <Link
                   ms="auto"
                   isExternal
-                  href="https://apiverse.com"
+                  href="https://Cupid-GPT.com"
                 >
                 </Link>
               </Flex>
@@ -186,7 +186,7 @@ function SidebarContent(props: SidebarContent) {
                 <Link
                   ms="auto"
                   isExternal
-                  href="https://apiverse.com"
+                  href="https://Cupid-GPT.com"
                 >
                 </Link>
               </Flex>
@@ -207,7 +207,7 @@ function SidebarContent(props: SidebarContent) {
                 <Link
                   ms="auto"
                   isExternal
-                  href="https://apiverse.com"
+                  href="https://Cupid-GPT.com"
                 >
                 </Link>
               </Flex>

@@ -148,7 +148,9 @@ export default function Chat() {
     );
 
     const handleChange = (Event: any) => {
-        setInputCode(Event.target.value);
+        const newValue = Event.target.value;
+        setInputCode(newValue);  // This seems to be unused, consider if it's necessary
+        setInputBoxValue(newValue); // Update inputBoxValue here
     };
 
     return (

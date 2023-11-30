@@ -18,29 +18,29 @@ const routes: IRoute[] = [
   // --- Others ---
   // --- Admin Pages ---
   {
-    name: 'My APIs',
+    name: 'Girls',
     disabled: false,
     path: '/admin',
     icon: <Icon as={MdLayers} width="20px" height="20px" color="inherit" />,
     collapse: true,
     items: [
       {
-        name: 'Mock API 1',
+        name: 'Girl 1',
         layout: '/admin',
         path: '/all-admin-templates',
       },
       {
-        name: 'Mock API 2',
+        name: 'Girl 2',
         layout: '/admin',
         path: '/new-template',
       },
       {
-        name: 'Mock API 3',
+        name: 'Girl 3',
         layout: '/admin',
         path: '/edit-template',
       },
       {
-        name: 'Mock API 4',
+        name: 'Girl 4',
         layout: '/admin',
         path: '/overview',
       },

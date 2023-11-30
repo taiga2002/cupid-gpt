@@ -1,3 +1,3 @@
 User-Agent: *
 Disallow:
-Sitemap: https://apiverse.com
+Sitemap: https://Cupid-GPT.com

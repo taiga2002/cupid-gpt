@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="APIVerse",
+    name="Cupid-GPT",
     version="0.0.1",
     description="Cal Hacks 10.0 Project",
     author="Jingchao (Perry) Zhong, Jiaxiang (Calvin) Li, Junyi (Alex) Zhang, Yufeng (Jimmy) Li",

@@ -2,7 +2,7 @@
 // Chakra imports
 import { Flex, useColorModeValue } from '@chakra-ui/react';
 
-import { APIVerseLogo } from '@/components/icons/Icons';
+import { CupidGPTLogo } from '@/components/icons/Icons';
 import { HSeparator } from '@/components/separator/Separator';
 
 export function SidebarBrand() {
@@ -11,7 +11,7 @@ export function SidebarBrand() {
 
   return (
     <Flex alignItems="center" flexDirection="column">
-      <APIVerseLogo/>
+      <CupidGPTLogo/>
       <HSeparator mb="20px" w="284px" />
     </Flex>
   );

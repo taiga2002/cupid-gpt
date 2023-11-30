@@ -17,7 +17,7 @@ if API_KEY:
 else:
     raise ValueError("Please set your OpenAI API key.")
 
-gpt_prompts = [{"role": "system", "content": "I am a man and you are a woman. I am trying to practice speaking to women. You can be flirty when necessary."}]
+gpt_prompts = [{"role": "system", "content": "I am a man and you are a woman. Pretend to be a witty woman who is great at making conversation. Be flirty whenever appropriate."}]
 
 @app.route('/process_mp3', methods=['POST'])
 def process_mp3():
@@ -118,6 +118,9 @@ def audio_to_text(file):
 def user_msg_to_server_msg(text):
     """Process user message to generate server message."""
     gpt_prompts.append({"role": "user", "content": text})
+
+    print("gpt_prompts")
+    print(gpt_prompts)
 
     try:
         response = client.chat.completions.create(model="gpt-3.5-turbo", messages=gpt_prompts)

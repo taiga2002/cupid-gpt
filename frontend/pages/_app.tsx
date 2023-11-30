@@ -49,7 +49,7 @@ function App({ Component, pageProps }: AppProps<{}>) {
               <Navbar
                 setApiKey={setApiKey}
                 onOpen={onOpen}
-                logoText={'APIVerse'}
+                logoText={'Cupid-GPT'}
                 brandText={getActiveRoute(routes, pathname)}
                 secondary={getActiveNavbar(routes, pathname)}
               />
