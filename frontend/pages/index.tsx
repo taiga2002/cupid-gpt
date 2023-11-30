@@ -8,7 +8,9 @@ import {MdAutoAwesome, MdPerson} from 'react-icons/md';
 import Bg from '../public/img/chat/bg-image.png';
 import axios from 'axios';
 import APIModal from "@/components/apiModal";
-import { uploadAudio, processText, audioToText } from "@/utils/functions";
+// @ts-ignore
+import { uploadAudio, processText, audioToText, generateSpeechMP3 } from "@/utils/functions";
+import Mp3Reader from "@/components/mpe3_reader/Mp3Reader";
 
 type ChatMessage = {
     type: 'sent' | 'received';
@@ -54,6 +56,18 @@ export default function Chat() {
                     console.log(error);
                 },
             )
+        } else if (chatHistory[chatHistory.length - 1].type === 'received') {
+            console.log("Received message");
+            let receivedMsg = chatHistory[chatHistory.length - 1].message;
+            console.log(receivedMsg);
+            // @ts-ignore
+            generateSpeechMP3(receivedMsg).then((response) => {
+                console.log("MP33333333333333333 Response Received");
+                console.log(response);
+            //   @ts-ignore
+            }).catch((error) => {
+                console.log(error);
+            });
         }
     }, [chatHistory]);
 

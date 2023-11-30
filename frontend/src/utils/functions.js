@@ -50,3 +50,34 @@ export const audioToText = (file) => {
             throw error;
         });
 }
+
+// Function to send text to the backend and receive a generated speech file
+export const generateSpeechMP3 = (text) => {
+    return fetch('http://127.0.0.1:3000/generate-speech', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: text }),
+    })
+        .then(response => {
+            if (response.ok) {
+                // Assuming the response is a Blob representing the audio file
+                return response.blob();
+            } else {
+                // Handle non-OK responses
+                throw new Error('Failed to generate speech');
+            }
+        })
+        .then(blob => {
+            // Here you can either return the blob or create a URL for it
+            // For example, to create a URL:
+            const url = URL.createObjectURL(blob);
+            return url;
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            throw error;
+        });
+}
+
