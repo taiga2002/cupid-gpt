@@ -82,6 +82,8 @@ def api_user_msg_to_server_msg():
         return jsonify({'error': 'No text provided'}), 400
 
     text = request.json['text']
+    print("extracted request text:")
+    print(text)
     try:
         print("text 1")
         reply = user_msg_to_server_msg(text)
@@ -117,6 +119,8 @@ def audio_to_text(file):
 
 def user_msg_to_server_msg(text):
     """Process user message to generate server message."""
+    print("user_msg_to_server_msg")
+    print(text)
     gpt_prompts.append({"role": "user", "content": text})
 
     print("gpt_prompts")

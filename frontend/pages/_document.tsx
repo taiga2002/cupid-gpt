@@ -5,7 +5,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <title>APIVerse</title>
+        <title>CupidGPT</title>
       </Head>
       <body suppressHydrationWarning={true}>
         <Main />

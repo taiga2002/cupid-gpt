@@ -83,7 +83,7 @@ export default function Chat() {
             console.log(`Final sent convesation ${conversation}`);
             setLoading(true);
             console.log("Query Sent");
-            processText(conversation[0]).then((response) => {
+            processText(conversation[conversation.length - 1]).then((response) => {
                 console.log("Response Received");
                 chatHistory.forEach((chat, index) => console.log(index, chat.message));
                 let data = response.reply;
