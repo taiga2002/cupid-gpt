@@ -36,6 +36,8 @@ export default function Chat() {
 
     const messagesEndRef = useRef(null);
 
+    const [musicSrc, setMusicSrc] = useState("");
+
     const scrollToBottom = () => {
         // @ts-ignore
         messagesEndRef.current?.scrollIntoView({behavior: "smooth"});
@@ -64,6 +66,7 @@ export default function Chat() {
             generateSpeechMP3(receivedMsg).then((response) => {
                 console.log("MP33333333333333333 Response Received");
                 console.log(response);
+                setMusicSrc(response);
             //   @ts-ignore
             }).catch((error) => {
                 console.log(error);
@@ -271,6 +274,7 @@ export default function Chat() {
                     <APIModal 
                     setApiKey={setURL}
                     setInputBoxValue={setInputBoxValue}/>
+                    <Mp3Reader musicSrc={musicSrc}/>
 
                 </Flex>
 
